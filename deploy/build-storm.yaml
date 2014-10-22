@@ -1,0 +1,6 @@
+ storm.zookeeper.servers:
+ - "${build.storm.zookeeper.servers.1}"
+ - "${build.storm.zookeeper.servers.2}"
+ - "${build.storm.zookeeper.servers.3}"
+
+ nimbus.host: "${build.nimbus.host}"
