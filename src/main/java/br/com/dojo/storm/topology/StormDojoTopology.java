@@ -1,7 +1,10 @@
 package br.com.dojo.storm.topology;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -26,15 +29,17 @@ public class StormDojoTopology {
 	}
 
 	public static void main(String[] args) throws Exception {
-		List<String> params = Arrays.asList(args);
+		List<String> params = new ArrayList<String>();
+		for (String arg : args) {
+			String[] argValues = arg.split(" ");
+			params.addAll(Arrays.asList(argValues));
+		}
 		StormDojoTopology topology = new StormDojoTopology(args);
-		topology.runLocal(240000);
-//		if(!params.contains("CLUSTER")){
-//			topology.runLocal(240000);
-//		}else{
-//			topology.runCluster("DOJO");
-//		}
-		//topology.runCluster("DOJO");
+		if(!params.contains("CLUSTER")){
+			topology.runLocal(240000);
+		}else{
+			topology.runCluster("DOJO");
+		}
 	}
 	
 	public void runLocal(int runTime) {

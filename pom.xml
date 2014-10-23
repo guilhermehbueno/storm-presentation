@@ -15,7 +15,7 @@
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<build.date>${maven.build.timestamp}</build.date>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<storm.deploy.area>/opt/search-heimdall</storm.deploy.area>
+		<storm.deploy.area>/opt/storm-presentation</storm.deploy.area>
 		<java.version>1.6</java.version>
 		<kafka.version>0.8.1</kafka.version>
 		<storm.version>0.9.0</storm.version>
