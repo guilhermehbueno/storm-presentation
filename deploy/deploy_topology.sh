@@ -1,12 +1,12 @@
 #!/bin/bash
 
-. /opt/search-heimdall/storm.properties
+. /opt/storm-presentation/storm.properties
 storm=${storm_location}/bin/./storm
 
 topology_jar=$(find ${topology_location} -name "*-jar-with-dependencies.jar")
 
 params=''
-for property in $(cat /opt/search-heimdall/heimdall.properties)
+for property in $(cat heimdall.properties)
 do
   params="${params} -${property/=/ }"
 done
