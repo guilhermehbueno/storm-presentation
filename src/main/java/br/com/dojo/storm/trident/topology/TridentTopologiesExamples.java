@@ -18,6 +18,7 @@ public class TridentTopologiesExamples {
 		topology.newStream("spout", fakeTwitterTridentSpout)
 				.each(new Fields("tweet"), filterTweetByScreenName)
 				.each(new Fields("tweet"), printTweetFunction);
+		
 		return topology.build();
 	}
 	
@@ -26,8 +27,14 @@ public class TridentTopologiesExamples {
 		FakeTwitterTridentSpout fakeTwitterTridentSpout = new FakeTwitterTridentSpout();
 		PrintTweetFunction printTweetFunction = new PrintTweetFunction();
 		topology.newStream("spout", fakeTwitterTridentSpout)
-				.aggregate(new Fields("tweet"), new TwitterAggregatorByName(), new Fields("summary"))
-				.each(new Fields("summary"), printTweetFunction);
+				.aggregate(fields("tweet"), new TwitterAggregatorByName(), fields("summary"))
+				.project(fields("summary"))
+				.each(fields("summary"), printTweetFunction);
 		return topology.build();
+	}
+	
+	
+	private static Fields fields(String...names){
+		return new Fields(names);
 	}
 }
