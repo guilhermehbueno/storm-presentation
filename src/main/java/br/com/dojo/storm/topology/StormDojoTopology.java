@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -15,6 +13,7 @@ import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.utils.Utils;
 import br.com.dojo.storm.bolt.PrinterBolt;
 import br.com.dojo.storm.spout.FakeTwiterSpout;
+import br.com.dojo.storm.topology.config.ConfigBuilder;
 
 public class StormDojoTopology {
 	
@@ -24,6 +23,7 @@ public class StormDojoTopology {
 	
 	private StormDojoTopology(String...args) throws Exception {
 		super();
+		new ConfigBuilder().config(args, conf);
 		this.builder.setSpout("FakeTwitterSpout", new FakeTwiterSpout(), 1);
 		this.builder.setBolt("PrinterBolt", new PrinterBolt(), 20).shuffleGrouping("FakeTwitterSpout");
 	}
@@ -34,6 +34,9 @@ public class StormDojoTopology {
 			String[] argValues = arg.split(" ");
 			params.addAll(Arrays.asList(argValues));
 		}
+		
+		System.out.println("Parâmetros recebidos:");
+		System.out.println(params);
 		StormDojoTopology topology = new StormDojoTopology(args);
 		if(!params.contains("CLUSTER")){
 			topology.runLocal(240000);
